@@ -1,0 +1,45 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__context7__*",
+      "mcp__serena",
+      "mcp__datadog-mcp__*",
+      "Read",
+      "Bash",
+      "WebFetch",
+      "WebSearch"
+    ],
+    "deny": []
+  },
+  "enabledPlugins": {
+    "example-skills@anthropic-agent-skills": true,
+    "document-skills@anthropic-agent-skills": true,
+    "lua-lsp@claude-plugins-official": true,
+    "code-simplifier@claude-plugins-official": true
+  },
+  "language": "ja",
+  "alwaysThinkingEnabled": false,
+  "planMode": {
+    "outputLanguage": "japanese"
+  },
+  "feedbackSurveyState": {
+    "lastShownTime": 1753944274983
+  },
+  "mcpServers": {
+    "serena": {
+      "type": "stdio",
+      "command": "uvx",
+      "args": [
+        "--from",
+        "git+https://github.com/oraios/serena",
+        "serena",
+        "start-mcp-server",
+        "--context",
+        "ide-assistant",
+        "--project",
+        "/Users/fujitanisora/dev/toridori/pf-staff-api"
+      ],
+      "env": {}
+    }
+  }
+}

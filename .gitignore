@@ -1,0 +1,16 @@
+# Ignore everything by default
+/*
+
+# But allow these specific items
+!agents/
+!commands/
+!skills/
+!CLAUDE.md
+!settings.json
+!.git/
+!.gitignore
+
+# Keep directory structure for allowed directories
+!agents/**
+!commands/**
+!skills/**
