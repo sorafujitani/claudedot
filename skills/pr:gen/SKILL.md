@@ -1,3 +1,11 @@
+---
+name: pr:gen
+description: |
+  現在のgit状態を分析し、標準フォーマットに準拠したPRを自動生成する。
+  Linear統合なしのシンプルなPR作成コマンド。
+disable-model-invocation: true
+---
+
 # PR Generation Command (without Linear Integration)
 
 現在のgit状態を分析し、toridori標準フォーマットに準拠したPRを自動生成します。

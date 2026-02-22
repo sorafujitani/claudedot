@@ -1,3 +1,11 @@
+---
+name: plan:dry-coding
+description: |
+  plan modeで詳細な実装コードを提示し、実際のファイル編集は行わずにレビュー可能な形で出力する。
+  調査・コード提示・レビューのみを行い、ファイルへの書き込みは行わない。
+disable-model-invocation: true
+---
+
 # plan-dry-coding
 
 claude code plan modeで実行されることが前提です。
@@ -11,7 +19,7 @@ claude code plan modeで実行されることが前提です。
    - 依存関係の調査
 
 2. 以下の形式で出力する：
-   
+
 ### カスタムコマンド指示
 ```
 [タスクの簡潔な説明と要件を記載]

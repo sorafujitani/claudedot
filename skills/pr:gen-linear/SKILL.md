@@ -1,3 +1,11 @@
+---
+name: pr:gen-linear
+description: |
+  Linear統合されたプルリクエスト作成。現在のgit状態とLinear issueを分析し、
+  標準フォーマットに準拠したPRを自動生成する。ブランチ名からLinear issue IDを抽出し紐付ける。
+disable-model-invocation: true
+---
+
 # PR Generation Command for Linear Integration
 
 あなたはLinear統合されたプルリクエスト作成のエキスパートです。現在のgit状態とLinear issueを分析し、toridori標準フォーマットに準拠したPRを自動生成します。

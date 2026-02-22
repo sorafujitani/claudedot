@@ -1,19 +1,27 @@
+---
+name: pr:cmt-plan
+description: |
+  GitHub PRのレビューコメント分析と改善計画の策定。
+  現在のブランチに関連するPRの未解決コメントを取得・分析し、
+  重要度分類（Critical/Important/Minor）と体系的な改善実行計画を生成する。
+disable-model-invocation: true
+---
+
 # PR Comment Analysis & Improvement Planning
 
 あなたはGitHub PRのレビューコメント分析と改善計画の専門家です。現在のブランチに関連するPRの未解決コメントを取得・分析し、体系的な改善計画を策定します。
 
 ## 実行手順
 
-1. **PR情報の取得**
+1. **PR特定**
    - 現在のブランチ名を確認: `git branch --show-current`
-   - 関連するPR番号を特定: `gh pr list --head [branch-name]`
-   - PR URLの取得: `gh pr view --json url`
+   - 関連するPR番号を特定: `gh pr list --head [branch-name] --json number,url --jq '.[0]'`
 
-2. **コメント情報の収集**
-   - PR全体のコメント取得: `gh pr view [PR番号] --comments`
-   - レビューコメント取得: `gh api repos/{owner}/{repo}/pulls/{PR番号}/comments`
-   - Issue コメント取得: `gh api repos/{owner}/{repo}/issues/{PR番号}/comments`
-   - 未解決の会話スレッド確認: `gh api repos/{owner}/{repo}/pulls/{PR番号}/reviews`
+2. **PRコンテキスト取得**
+   - `ctx:github` エージェント（`Task` ツールで `subagent_type: "ctx:github"`）を呼び出し、PR情報を一括取得する
+   - プロンプト例: `"{owner}/{repo}#{PR番号} のPR情報を取得して"`
+   - 返却される構造化コンテキスト（`=== GITHUB_CONTEXT: PR ===` ブロック）からメタデータ・BODY・REVIEW_STATUS・FILES・COMMENTSを利用する
+   - インラインレビューコメント（ファイル・行単位）が必要な場合は追加で取得: `gh api repos/{owner}/{repo}/pulls/{PR番号}/comments --jq '.[] | {path, line, body, user: .user.login, created_at}'`
 
 3. **コメント内容の分析**
    - **重要度分類**:

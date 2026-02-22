@@ -1,4 +1,13 @@
-# 🧹 Mac Cleanup - macOS メンテナンス自動実行
+---
+name: mac-cleanup
+description: |
+  macOSの不要ファイルやキャッシュを削除してストレージを最適化する。
+  Docker、開発キャッシュ、アプリケーションキャッシュ、ダウンロード整理、
+  システムキャッシュ等を対話的に選択して安全にクリーンアップ。
+disable-model-invocation: true
+---
+
+# Mac Cleanup - macOS メンテナンス自動実行
 
 macOSの不要ファイルやキャッシュを削除してストレージを最適化します。削除前に対話的に削除対象を選択でき、安全にメンテナンスが実行できます。
 
@@ -38,7 +47,7 @@ docker_container_size=$(check_size ~/Library/Containers/com.docker.docker/Data)
 
 echo "削除対象の容量:"
 echo "  🐳 Docker: $docker_size"
-echo "  📦 ~/.cache: $cache_size"  
+echo "  📦 ~/.cache: $cache_size"
 echo "  📦 ~/.npm: $npm_size"
 echo "  📦 ~/Library/Caches: $library_cache_size"
 echo "  📥 ~/Downloads: $downloads_size"
@@ -50,7 +59,7 @@ echo -e "${YELLOW}削除する項目を選択してください (y/n):${NC}"
 
 read -p "🐳 Docker system prune (コンテナ/イメージ/ボリューム全削除)? " -n 1 -r docker_choice
 echo ""
-read -p "📦 開発キャッシュ (~/.cache, ~/.npm)? " -n 1 -r dev_cache_choice  
+read -p "📦 開発キャッシュ (~/.cache, ~/.npm)? " -n 1 -r dev_cache_choice
 echo ""
 read -p "📦 アプリケーションキャッシュ (~/Library/Caches)? " -n 1 -r app_cache_choice
 echo ""
@@ -82,7 +91,7 @@ if [[ $dev_cache_choice =~ ^[Yy]$ ]]; then
     echo "  ✅ 開発キャッシュ削除完了"
 fi
 
-# アプリケーションキャッシュ  
+# アプリケーションキャッシュ
 if [[ $app_cache_choice =~ ^[Yy]$ ]]; then
     echo -e "${BLUE}📦 アプリケーションキャッシュ削除中...${NC}"
     rm -rf ~/Library/Caches/* 2>/dev/null || true
@@ -93,7 +102,7 @@ fi
 if [[ $downloads_choice =~ ^[Yy]$ ]]; then
     echo -e "${BLUE}📥 ダウンロードファイル削除中...${NC}"
     find ~/Downloads -name "*.dmg" -delete 2>/dev/null || true
-    find ~/Downloads -name "*.zip" -delete 2>/dev/null || true  
+    find ~/Downloads -name "*.zip" -delete 2>/dev/null || true
     find ~/Downloads -name "*.pkg" -delete 2>/dev/null || true
     echo "  ✅ インストーラー削除完了"
 fi
@@ -132,25 +141,17 @@ echo ""
 echo -e "${YELLOW}📊 削除後の状況:${NC}"
 echo "  🐳 Docker: $(docker system df --format "table {{.TotalCount}}\t{{.Size}}" 2>/dev/null | tail -n +2 | awk '{total+=$2} END {print total "MB"}' || echo "0MB")"
 echo "  📦 ~/.cache: $(check_size ~/.cache)"
-echo "  📦 ~/.npm: $(check_size ~/.npm)"  
+echo "  📦 ~/.npm: $(check_size ~/.npm)"
 echo "  📦 ~/Library/Caches: $(check_size ~/Library/Caches)"
 echo "  📥 ~/Downloads: $(check_size ~/Downloads)"
 echo ""
 echo -e "${GREEN}🎉 PCが軽くなりました!${NC}"
 ```
 
-## 使い方
-
-Claude Codeで以下のコマンドを実行:
-
-```
-/mac-cleanup
-```
-
 ## 機能
 
 - 🐳 **Docker cleanup**: コンテナ/イメージ/ボリューム削除
-- 📦 **開発キャッシュ**: npm, cargo, go等のキャッシュ削除  
+- 📦 **開発キャッシュ**: npm, cargo, go等のキャッシュ削除
 - 📦 **アプリキャッシュ**: ~/Library/Caches配下の削除
 - 📥 **ダウンロード整理**: .dmg/.zip/.pkg削除
 - 🍎 **システムキャッシュ**: DNS/ログ/Simulator削除
@@ -162,11 +163,3 @@ Claude Codeで以下のコマンドを実行:
 - ✅ システム重要ファイル保護
 - ✅ 全コマンドエラーハンドリング対応
 - ✅ 削除前後の容量表示
-
-## 削減効果
-
-**期待削減容量: 70-155GB**
-- Docker関連: 50-100GB
-- 開発キャッシュ: 10-30GB  
-- アプリキャッシュ: 5-10GB
-- ダウンロード: 5-15GB
